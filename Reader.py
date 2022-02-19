@@ -1,20 +1,34 @@
 from PyPDF2 import PdfFileReader
 import os
 
+Documents = os.path.join("test")
+
 def main():
-    print("main")
+    temp = open(Documents+"\\sd,nf.pdf", 'rb')
+    _pdfRead = PdfFileReader(temp)
+    page = _pdfRead.getPage(0)
+    text = page.extractText()
+    getInfos(text)
 
 
 def getInfos(text):
-    print("infos")
+    wantedInfos = ""
+    for i in range(len(text)):
+        if text[i] == 'N':
+            if checkIfKey(text[i] + text[i+1] + text[i+2] + text[i+3]):
+                _curIndex = i+4
+                while text[_curIndex] != '\n':
+                    wantedInfos += text[_curIndex]
+                    _curIndex += 1
+                print(wantedInfos)
+                return wantedInfos
 
 
-def changeFilename(name):
-    print("changeName")
+
 
 
 def checkIfKey(info):
-    print("check")
+    return info == "Nr. "
 
 
 if __name__ == '__main__':
