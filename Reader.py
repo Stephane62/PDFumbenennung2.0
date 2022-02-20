@@ -12,11 +12,12 @@ def main():
             _pdfRead = PdfFileReader(temp)
             page = _pdfRead.getPage(0)
             text = page.extractText()
+            temp.close()
             _requestedInfo = getInfos(text)
             _organisedData = setDataForList(_requestedInfo)
             info_list = getInfoList(_organisedData)
-            temp.close()
-            new_name = Documents + "\\" +info_list[0] + " " + info_list[1] + ".pdf"
+            client_id = setClientId(info_list[0])
+            new_name = Documents + "\\[" +client_id + " " + info_list[1] + "].pdf"
             if os.path.isfile(new_name):
                 print("File with the same name already exists !!!")
             else:
@@ -63,5 +64,11 @@ def getInfoList(organisedInfo):
             curInfo = ""
     return info_list
 
+def setClientId(nonProcessedId):
+    id = ""
+    for i in nonProcessedId:
+        if i != '/':
+            id += i
+    return id
 if __name__ == '__main__':
     main()
