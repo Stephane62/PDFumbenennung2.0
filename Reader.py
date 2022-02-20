@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 
-xl = pd.read_excel('test/Excel/mappe.xlsx')
+xl = pd.read_excel('Excel/mappe.xlsx')
 print(xl)
 Documents = os.path.join("test")
 
@@ -11,7 +11,6 @@ def main():
     for root,directory,files in os.walk(Documents):
         for my_file in files:
             old_name = Documents + "\\" + my_file
-            print(old_name)
             temp = open(old_name, 'rb')
             _pdfRead = PdfFileReader(temp)
             page = _pdfRead.getPage(0)
