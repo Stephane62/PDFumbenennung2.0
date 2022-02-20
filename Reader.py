@@ -1,6 +1,10 @@
 from PyPDF2 import PdfFileReader
 import os
+import pandas as pd
 
+
+xl = pd.read_excel('test/Excel/mappe.xlsx')
+print(xl)
 Documents = os.path.join("test")
 
 def main():
