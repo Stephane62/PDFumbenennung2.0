@@ -1,10 +1,19 @@
 from PyPDF2 import PdfFileReader
 import os
 import pandas as pd
+import openpyxl as op
+
+wrkbk = op.load_workbook('Excel/mappe.xlsx')
+sh = wrkbk.active
+
+for i in range(2, sh.max_row + 1):
+    print("\n")
+    for j in range(1, sh.max_column + 1):
+        cell_obj = sh.cell(row=i, column=j)
+        list2 = [cell_obj.value]
+        print(list2)
 
 
-xl = pd.read_excel('Excel/mappe.xlsx')
-print(xl)
 Documents = os.path.join("test")
 
 def main():
@@ -26,6 +35,7 @@ def main():
             else:
                 os.rename(old_name, new_name)
                 print("Successfully changed the name of the file with the name : " + my_file)
+
 
 
 def getInfos(text):
