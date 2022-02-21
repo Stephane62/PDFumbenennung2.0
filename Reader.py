@@ -2,8 +2,10 @@ from PyPDF2 import PdfFileReader
 import os
 import pandas as pd
 import openpyxl as op
+import time
 
 
+start = time.time()
 wrkbk = op.load_workbook('Excel/mappe.xlsx')
 sh = wrkbk.active
 
@@ -56,7 +58,8 @@ def main():
                 os.rename(old_name, new_name)
                 print("Successfully changed the name of the file with the name : " + my_file)
 
-
+    end = time.time()
+    print(end - start, " ms")
 
 def getInfos(text):
     wantedInfos = ""
