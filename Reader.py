@@ -3,15 +3,31 @@ import os
 import pandas as pd
 import openpyxl as op
 
+
 wrkbk = op.load_workbook('Excel/mappe.xlsx')
 sh = wrkbk.active
 
+
+personalIds = []
+Vertragsnummern = []
+Names = []
+
+
+
 for i in range(2, sh.max_row + 1):
-    print("\n")
     for j in range(1, sh.max_column + 1):
         cell_obj = sh.cell(row=i, column=j)
-        list2 = [cell_obj.value]
-        print(list2)
+        #print(cell_obj.value , " ",i," ", j ,end=' ')
+        #list2 = [cell_obj.value]
+        #print(list2)
+        if j == 1:
+            personalIds.append(cell_obj.value)
+        elif j == 2:
+            Vertragsnummern.append(cell_obj.value)
+        elif j == 3:
+            Names.append(cell_obj.value)
+        elif j == 4:
+            Names[i-2] += " " + cell_obj.value
 
 
 Documents = os.path.join("test")
@@ -29,7 +45,11 @@ def main():
             _organisedData = setDataForList(_requestedInfo)
             info_list = getInfoList(_organisedData)
             client_id = setClientId(info_list[0])
-            new_name = Documents + "\\[" +client_id + " " + info_list[1] + "].pdf"
+            real_name = reverseName(info_list[1])
+            _index_in_Names = Names.index(real_name)
+            personalnummer = str(personalIds[_index_in_Names])
+            vertragsnummer = str(Vertragsnummern[_index_in_Names])
+            new_name = Documents + "\\[" + personalnummer + "-" + vertragsnummer + "-" + real_name + "].pdf"
             if os.path.isfile(new_name):
                 print("File with the same name already exists !!!")
             else:
@@ -83,5 +103,17 @@ def setClientId(nonProcessedId):
         if i != '/':
             id += i
     return id
+
+def reverseName(name):
+    firstname = ""
+    familyName = ""
+    _spaceIndex = name.find(' ')
+    for i in range(len(name)):
+        if i < _spaceIndex:
+            familyName += name[i]
+        elif i > _spaceIndex:
+            firstname += name[i]
+    return firstname + " " + familyName
+
 if __name__ == '__main__':
     main()
