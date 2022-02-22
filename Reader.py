@@ -7,16 +7,14 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import *
 
-start = time.time()
+
 
 class Login:
 
-    #_dateienFolder = os.path.join("Dateien")
+    laufzeit = 0
     excel = ""
-    wrkbk = op.load_workbook(excel)
-    sh = wrkbk.active
-    pdf = ""
-    Documents = os.path.join(pdf)
+    #_dateienFolder = os.path.join("Dateien")
+    Documents = ""
 
     personalIds = []
     Vertragsnummern = []
@@ -30,8 +28,8 @@ class Login:
         self.root.resizable(False,False)
 
         #Hintergund Image
-        self.bg = PhotoImage(file="ico\\l.jpg")
-        self.bg_image=Label(self.root, image=self.bg).place(x=0,y=-300, relwidth=1, relheight=1)
+        #self.bg = PhotoImage(file="ico\\l.jpg")
+        #self.bg_image=Label(self.root, image=self.bg).place(x=0,y=-300, relwidth=1, relheight=1)
 
         #Anmeldungsdaten
         Frame_login = Frame(self.root, bg="white")
@@ -48,40 +46,44 @@ class Login:
         submit1 = Button(Frame_login, command=self.openPathtoPdfs, cursor="hand2", text="PDFs path eingeben", bd=0,font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=380, width=180,height=40)
 
         #Button command=self.check_function
-        submit = Button(Frame_login,command= self.main(), cursor="hand2", text="Start", bd=0, font=("Goudy old style", 15),bg="#6162FF", fg="white").place(x=90, y=450, width=180, height=40)
+        submit = Button(Frame_login,command= self.changePdfNames, cursor="hand2", text="Start", bd=0, font=("Goudy old style", 15),bg="#6162FF", fg="white").place(x=90, y=450, width=180, height=40)
 
     def openExcel(self):
         filepath = filedialog.askopenfilename()
         print(filepath)
         Login.excel = filepath
-        return filepath
+        self.setExcelDateien()
 
     def openPathtoPdfs(self):
         directory = filedialog.askdirectory()
         print(directory)
-        Login.pdf = directory
-        return directory
+        Login.Documents = directory
 
-
-
-        for i in range(2, Login.sh.max_row + 1):
-           for j in range(1, Login.sh.max_column + 1):
-            cell_obj = Login.sh.cell(row=i, column=j)
+    def setExcelDateien(self):
+        start_excel = time.time()
+        wrkbk = op.load_workbook(Login.excel)
+        sh = wrkbk.active
+        for i in range(2, sh.max_row + 1):
+           for j in range(1, sh.max_column + 1):
+            cell_obj = sh.cell(row=i, column=j)
             # print(cell_obj.value , " ",i," ", j ,end=' ')
             # list2 = [cell_obj.value]
             # print(list2)
             if j == 1:
-                personalIds.append(cell_obj.value)
+                Login.personalIds.append(cell_obj.value)
             elif j == 2:
-                Vertragsnummern.append(cell_obj.value)
+                Login.Vertragsnummern.append(cell_obj.value)
             elif j == 3:
-                Names.append(cell_obj.value)
+                Login.Names.append(cell_obj.value)
             elif j == 4:
-                Names[i - 2] += " " + cell_obj.value
+                Login.Names[i - 2] += " " + cell_obj.value
+        end_excel = time.time()
+        Login.laufzeit += (end_excel - start_excel)
 
 
 
-    def main(self):
+    def changePdfNames(self):
+        start = time.time()
         for root, directory, files in os.walk(Login.Documents):
             for my_file in files:
                 old_name = Login.Documents + "\\" + my_file
@@ -106,7 +108,8 @@ class Login:
                     print("Successfully changed the name of the file with the name : " + my_file)
 
         end = time.time()
-        print(end - start, " ms")
+        Login.laufzeit += (end - start)
+        print(Login.laufzeit)
 
     def getInfos(self,text):
         wantedInfos = ""
@@ -168,7 +171,7 @@ class Login:
         # if __name__ == '__main__':
         # main()
 
-
-
     def start(self):
-        self.root.mainloop
+        self.root.mainloop()
+
+
