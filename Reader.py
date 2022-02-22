@@ -37,9 +37,9 @@ class Login:
         Frame_login = Frame(self.root, bg="white")
         Frame_login.place(x=420, y=300, width=500, height=550)
 
-        #Title & subtitle
-        title = Label(Frame_login, text="Login Here", font=("Impact", 35, "bold"), fg="#D4AF37", bg="white").place(x=90,y=30)
-        subtitle = Label(Frame_login, text="Mitarbeiter Login Area", font=("Goudy old style", 15, "bold"), fg="#1d1d1d", bg="white").place(x=90,y=100)
+        #Title
+        title = Label(Frame_login, text="DatenVerwaltung", font=("Impact", 35, "bold"), fg="#D4AF37", bg="white").place(x=90,y=30)
+
 
         #Path to Excel tabelle
         submit2 = Button(Frame_login, command=self.openExcel, cursor="hand2", text="Excel Path eingeben", bd=0,font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=310, width=180, height=40)
