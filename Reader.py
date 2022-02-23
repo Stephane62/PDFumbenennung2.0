@@ -177,6 +177,7 @@ class Login:
             if i != '/':
                 id += i
         return id
+    print("test")
 
     def reverseName(self,name):
         firstname = ""
