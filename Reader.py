@@ -49,18 +49,19 @@ class Login:
 
         #Path Eingabe Excel
         self.ExcelEingabe = Entry(Frame_login, font=("Goudy old style", 15), bg="#E7E6E6")
-        self.ExcelEingabe.insert(END, self.openExcel())
+        self.ExcelEingabe.insert(END, self.openExcel)
         self.ExcelEingabe.place(x=300, y=200, width=380, height=30)
 
         # Path Eingabe PDFs
         self.pdfEingabe = Entry(Frame_login, font=("Goudy old style", 15), bg="#E7E6E6")
-        self.pdfEingabe.insert(END, self.openPathtoPdfs())
+        self.pdfEingabe.insert(END, self.openPathtoPdfs)
         self.pdfEingabe.place(x=300, y=270, width=380,height=30)
 
         #Button command=self.check_function
         submit = Button(Frame_login,command= self.changePdfNames, cursor="hand2", text="Start", bd=0, font=("Goudy old style", 15),bg="#6162FF", fg="white").place(x=90, y=340, width=180, height=40)
 
         lbl_hinweis = Label(Frame_login, text="(PDF- und Excel-Dokumente müssen sich in unterschiedlichen Ordnern befinden.)",font=("Goudy old style", 13), fg="black", bg="white").place(x= 90,y=390)
+
 
     def openExcel(self):
         filepath = filedialog.askopenfilename()
@@ -194,4 +195,4 @@ class Login:
     def start(self):
         self.root.mainloop()
 
-#Signature from Emre
+
