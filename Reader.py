@@ -11,6 +11,8 @@ from tkinter import *
 
 class Login:
 
+    pathExcel=""
+    pathPDF = ""
     laufzeit = 0
     excel = ""
     #_dateienFolder = os.path.join("Dateien")
@@ -24,40 +26,58 @@ class Login:
     def __init__(self):
         self.root = Tk()
         self.root.title("Rename PDFs")
-        self.root.geometry("1160x920+100+50")
+        self.root.geometry("760x520+90+50")
         self.root.resizable(False,False)
 
         #Hintergund Image
-        #self.bg = PhotoImage(file="ico\\l.jpg")
+        #self.bg = PhotoImage(file="ico/l.png")
         #self.bg_image=Label(self.root, image=self.bg).place(x=0,y=-300, relwidth=1, relheight=1)
 
         #Anmeldungsdaten
         Frame_login = Frame(self.root, bg="white")
-        Frame_login.place(x=420, y=300, width=500, height=550)
+        Frame_login.place(x=20, y=5, width=700, height=550)
 
         #Title
-        title = Label(Frame_login, text="DatenVerwaltung", font=("Impact", 35, "bold"), fg="#D4AF37", bg="white").place(x=90,y=30)
+        title = Label(Frame_login, text="Lurse AG", font=("Impact", 35, "bold"), fg="#D4AF37", bg="white").place(x=90,y=30)
 
 
         #Path to Excel tabelle
-        submit2 = Button(Frame_login, command=self.openExcel, cursor="hand2", text="Excel Path eingeben", bd=0,font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=310, width=180, height=40)
+        submit2 = Button(Frame_login, command=self.openExcel, cursor="hand2", text="Excel Path eingeben", bd=0,font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=200, width=180, height=40)
 
         #Path der PDFs
-        submit1 = Button(Frame_login, command=self.openPathtoPdfs, cursor="hand2", text="PDFs path eingeben", bd=0,font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=380, width=180,height=40)
+        submit1 = Button(Frame_login, command=self.openPathtoPdfs, cursor="hand2", text="PDFs path eingeben", bd=0,font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=270, width=180,height=40)
+
+        #Path Eingabe Excel
+        self.ExcelEingabe = Entry(Frame_login, font=("Goudy old style", 15), bg="#E7E6E6")
+        self.ExcelEingabe.insert(END, self.openExcel())
+        self.ExcelEingabe.place(x=300, y=200, width=380, height=30)
+
+        # Path Eingabe PDFs
+        self.pdfEingabe = Entry(Frame_login, font=("Goudy old style", 15), bg="#E7E6E6")
+        self.pdfEingabe.insert(END, self.openPathtoPdfs())
+        self.pdfEingabe.place(x=300, y=270, width=380,height=30)
 
         #Button command=self.check_function
-        submit = Button(Frame_login,command= self.changePdfNames, cursor="hand2", text="Start", bd=0, font=("Goudy old style", 15),bg="#6162FF", fg="white").place(x=90, y=450, width=180, height=40)
+        submit = Button(Frame_login,command= self.changePdfNames, cursor="hand2", text="Start", bd=0, font=("Goudy old style", 15),bg="#6162FF", fg="white").place(x=90, y=340, width=180, height=40)
+
+        lbl_hinweis = Label(Frame_login, text="(PDF- und Excel-Dokumente müssen sich in unterschiedlichen Ordnern befinden.)",font=("Goudy old style", 13), fg="black", bg="white").place(x= 90,y=390)
 
     def openExcel(self):
         filepath = filedialog.askopenfilename()
         print(filepath)
         Login.excel = filepath
+        Login.pathExcel = filepath
         self.setExcelDateien()
+        return filepath
+
 
     def openPathtoPdfs(self):
         directory = filedialog.askdirectory()
         print(directory)
         Login.Documents = directory
+        Login.pathPDF = directory
+        return directory
+
 
     def setExcelDateien(self):
         start_excel = time.time()
