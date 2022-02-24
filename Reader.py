@@ -96,11 +96,11 @@ class Login:
                 Login.Vertragsnummern.append(cell_obj.value)
             elif j == 3:
                 Login.Names.append(cell_obj.value)
-            elif j == 4:
-                Login.Names[i - 2] += " " + cell_obj.value
+            else:
+                Login.Names[i-2] += " " + cell_obj.value
         end_excel = time.time()
         Login.laufzeit += (end_excel - start_excel)
-
+        print(Login.Names)
 
 
     def changePdfNames(self):
@@ -195,5 +195,3 @@ class Login:
 
     def start(self):
         self.root.mainloop()
-
-
